@@ -51,6 +51,16 @@ public class InstructorTest {
 		assertFalse(instructor.homeworkExists("Class", 2017, "Homework"));
 	}
 	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testAddHomework_nulls() {
+		try {
+			instructor.addHomework(null, null, 2017, null);
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
+	}
+	
 	/* Test grades can be assigned */
 	@Test
 	public void testAssignGrade1() {
@@ -164,5 +174,15 @@ public class InstructorTest {
 		instructor.assignGrade("Instructor", "Class", 2017, "Homework", "Student", -10);
 		
 		assertNotEquals(new Integer(-10), instructor.getGrade("Class", 2017, "Homework", "Student"));
+	}
+	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testAssignGrade_nulls() {
+		try {
+			instructor.assignGrade(null, null, 2017, null, null, 50);
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
 	}
 }

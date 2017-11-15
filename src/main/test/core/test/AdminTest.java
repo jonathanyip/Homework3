@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -102,6 +103,17 @@ public class AdminTest {
 		assertTrue(admin.classExists("Class", 2017));
 	}
 	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testCreateClass_nulls() {
+		try {
+			admin.createClass(null, 2017, null, 1);
+			assertFalse(admin.classExists(null, 2017));
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
+	}
+	
 	/* Test that change capacity changes the capacity of a class */
 	@Test
 	public void testChangeCapacity_changeCapacity1() {
@@ -184,5 +196,15 @@ public class AdminTest {
 		assertEquals(1, admin.getClassCapacity("Class", 2017));
 		assertTrue(student.isRegisteredFor("Student1", "Class", 2017));
 		assertFalse(student.isRegisteredFor("Student2", "Class", 2017));
+	}
+	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testChangeCapacity_nulls() {
+		try {
+			admin.changeCapacity(null, 2017, 1);
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
 	}
 }

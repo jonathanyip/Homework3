@@ -64,6 +64,20 @@ public class StudentTest {
 		assertFalse(student.isRegisteredFor("Student", "Class", 2017));
 	}
 	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testRegisterForClass_nulls() {
+		try {
+			admin.createClass("Class", 2017, "Instructor", 1);
+			student.registerForClass(null, "Class", 2017);
+			assertFalse(student.isRegisteredFor(null, "Class", 2017));
+			
+			student.registerForClass(null, null, 2017);
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
+	}
+	
 	/* Test that student can drop class, normally */
 	@Test
 	public void testDropClass_general1() {
@@ -81,6 +95,16 @@ public class StudentTest {
 		student.dropClass("Student", "Class", 2017);
 		
 		assertFalse(student.isRegisteredFor("Student", "Class", 2017));
+	}
+	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testDropClass_nulls() {
+		try {
+			student.dropClass(null, null, 2017);
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
 	}
 	
 	/* Test that student can submit homework, normally */
@@ -127,5 +151,23 @@ public class StudentTest {
 		student.submitHomework("Student", "Homework", "Answer", "Class", 2018);
 		
 		assertFalse(student.hasSubmitted("Student", "Homework", "Class", 2018));
+	}
+	
+	/* Test that null's don't do unusual things */
+	@Test
+	public void testSubmitHomework_nulls() {
+		try {
+			admin.createClass("Class", 2018, "Instructor", 1);
+			instructor.addHomework("Instructor", "Class", 2017, "Homework");
+			
+			student.registerForClass("Student", "Class", 2017);
+			student.submitHomework("Student", "Homework", null, "Class", 2017);
+			
+			assertFalse(student.hasSubmitted("Student", "Homework", "Class", 2017));
+			
+			student.submitHomework(null, null, null, null, 2017);
+		} catch(Exception e) {
+			fail("Raised exception with null!");
+		}
 	}
 }
